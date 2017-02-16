@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)file:///C:/Users/asus/Desktop/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<title></title>
+</head>
+<body>
+<script>
+	var f = function(y) {
+		return (y-y*y)/10;
+	}
+	var fCheck = function(x) {
+		return Math.exp(x/10)/(1+Math.exp(x/10));
+	}
+	var result = [][];
+	var result_check = [][];
+	var n = 0;
+	result[0][0] = 0.5;
+	result[1][0] = 0.5;
+	result[2][0] = 0.5;
+	result_check[0][n]=0.5;
+	result_check[1][n]=0.5;
+	result_check[2][n]=0.5;
+	
+
+	var v = function(h,N,result,result_check) {
+		
+		for(var i=1;i<N;i++)
+		{
+			var x  = a + i*h;
+			var k0=h*f(result[n]);
+			var k1=h*f(result[n]+(2/9)*k0);
+			var k2=h*f(result[n]+(1/12)*k0+(16/75)*k1);
+			var k3=h*f(result[n]+(69/128)*k0-(243/128)*k1+(135/64)*k2);
+			var k4=h*f(result[n]-(17/12)*k0+(27/4)*k1-(27/5)*k2+(16/15)*k3);
+			result.push(result[n]+(1/9)*k0+(9/20)*k2+(16/45)*k3+(1/12)*k4);
+			result_check.push(fCheck(x));
+			n++;
+		}
+		n=0;
+	}
+	var b=1,a=0;
+	var h= [0.2,0.2/5,0.2/25];
+	var N = [1/h[0],1/h[1],1/h[2]];
+	v(h[0],N[0],result[0],result_check[0]);
+	v(h[1],N[1],result[1],result_check[1]);
+	v(h[1],N[1],result[2],result_check[2]);
+	console.log(result);
+	console.log(result_check);
+	
+</script>
+
+</body></html>

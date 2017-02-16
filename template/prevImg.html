@@ -1,0 +1,6 @@
+<div class="prevImg">
+    <img ng-repeat="img in images" alt="alt" ng-src="{{img}}" ng-swipe-right="setPrevIndexImg" ng-hide="!isCurrentImage($index)">
+    <!--<button ng-click="setPrevIndexImg()">PrevImg</button>-->
+    <!--<button ng-click="setNextIndexImg()">NextImg</button>-->
+    <div><img ng-repeat="img in images" alt="alt" ng-src="{{img}}" ng-class="isCurrentImage($index)? 'active':''" ng-click="setIndexImg($index)"></div>
+</div>
