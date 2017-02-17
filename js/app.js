@@ -1,3 +1,5 @@
+var angular = require('angular');
+require('angular-route');
 var deskApp = angular.module("deskApp", ['ngRoute']);
 
 deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
@@ -17,3 +19,4 @@ deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$l
             template: "<h1>404</h1>"
         })
 }]);
+require('./index.js')(deskApp);

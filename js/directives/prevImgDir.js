@@ -1,4 +1,4 @@
-
+module.exports = function (deskApp) {
 deskApp.directive("prevImg",function ($interval) {
 
     return {
@@ -29,3 +29,4 @@ deskApp.directive("prevImg",function ($interval) {
         templateUrl:"./template/prevImg.html"
     };
 });
+};

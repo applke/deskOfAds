@@ -1,6 +1,4 @@
-/**
- * Created by asus on 17.02.2017.
- */
+module.exports = function (deskApp) {
 deskApp.factory("listProducts", [function () {
     var list = [
         {
@@ -84,3 +82,4 @@ deskApp.factory("listProducts", [function () {
     };
 
 }]);
+};
