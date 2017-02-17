@@ -1,6 +1,7 @@
 <h2 ng-bind="product.productTitle"></h2>
-<h3>{{product.productID}}</h3>
 <prev-img images="product.productImages" ></prev-img>
 <p>{{product.productAbout}}</p>
 <i>{{product.productPrice | currency}}</i><br>
 <a href="#!/product/{{product.productID}}">Learn More...</a>
+<br>
+<button type="button" class="btn btn-success center-block" ng-disabled="inCart" ng-click="addToCart()">Add To Cart!</button>
