@@ -1,7 +1,7 @@
 /**
  * Created by asus on 17.02.2017.
  */
-deskApp.factory("listProducts",[function () {
+deskApp.factory("listProducts", [function () {
     var list = [
         {
             productID: 0,
@@ -67,21 +67,20 @@ deskApp.factory("listProducts",[function () {
             productField4: "Field4",
             productField5: "Field5",
         }];
-    var obj  = {
+    return {
         getList: function () {
             return list;
         },
         getItem: function (id) {
             id = parseInt(id);
 
-            for(var i =0;i<list.length;i++)
-                if(list[i].productID === id)
-                    return list[i];
+            for (var i = 0; i < list.length; i++)
+                if (list[i].productID === id)
+                    return angular.copy(list[i]);
 
 
-
-      //  return 0;
+            //  return 0;
         }
     };
-    return obj;
+
 }]);

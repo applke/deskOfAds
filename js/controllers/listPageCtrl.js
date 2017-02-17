@@ -1,4 +1,4 @@
-deskApp.controller("listPageCtrl", function ($scope, $http,listProducts) {
+deskApp.controller("listPageCtrl", ['$scope','$http','listProducts','cart',function ($scope, $http,listProducts,cart) {
     $scope.list = listProducts.getList() ;
 
     $scope.displayProductsOffset = 0;
@@ -15,7 +15,8 @@ deskApp.controller("listPageCtrl", function ($scope, $http,listProducts) {
     $scope.prevProducts = function () {
         $scope.displayProductsOffset--;
     };
+
     // $http.get('/products').then(function(response) {
     //     $scope.list = response.data;
     // });
-});
+}]);
