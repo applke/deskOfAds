@@ -75,6 +75,9 @@ module.exports = function (deskApp) {
                     if (list[i].productID === id)
                         return angular.copy(list[i]);
             },
+            getItemsByTitle: function (titles) {
+                
+            },
             getItems: function (ids) {
                 var arr = [];
                 ids.sort();

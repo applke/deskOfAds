@@ -3,11 +3,17 @@ module.exports = function (deskApp) {
         return {
             scope: {
                 product: '='
-            }, link: function (scope) {
-                scope.inCart = $filter('cartExist')(scope.product);
-                scope.addToCart = function () {
-                    cart.addCart(scope.product);
-                    scope.inCart = true;
+            }, controller: function ($scope) {
+
+
+
+                $scope.addToCart = function () {
+                    if(cart.addCart($scope.product))
+                        alert("added to cart!");
+                        else
+                        alert("already in cart!")
+
+
                 };
             },
             templateUrl: "./template/singleProduct.html"

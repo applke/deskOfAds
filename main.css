@@ -9,7 +9,10 @@
     flex-wrap: nowrap;
     justify-content: space-around;
     align-items: center;
-    height: 100vh;
+    position:relative;
+    top:80px;
+    height: auto;
+    overflow: hidden;
     margin: auto 0;
 }
 

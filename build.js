@@ -63,11 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */
+/* 0 */,
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -80,6 +81,7 @@ module.exports = function (ngModule) {
   __webpack_require__(6)(ngModule);
   __webpack_require__(7)(ngModule);
   __webpack_require__(5)(ngModule);
+  __webpack_require__(16)(ngModule);
 
   __webpack_require__(8)(ngModule);
   __webpack_require__(9)(ngModule);
@@ -89,19 +91,11 @@ module.exports = function (ngModule) {
 };
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
 module.exports = 'ngRoute';
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(12);
-module.exports = angular;
 
 
 /***/ }),
@@ -122,8 +116,9 @@ module.exports = function (deskApp) {
         }
 
     }]);
-};
-        /***/ }),
+};;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+/***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
@@ -164,10 +159,14 @@ module.exports = function (ngModule) {
             }, controller: function ($scope) {
 
                 $scope.c = cart.getCartElements();
+                $scope.deleteFromCart = function (value) {
+                       cart.deleteElement(value);
 
-                console.log("cart", $scope.c);
+                };
+
 
             },
+            replace:true,
             templateUrl: "./template/cart.html"
         };
     }]);
@@ -219,11 +218,17 @@ module.exports = function (deskApp) {
         return {
             scope: {
                 product: '='
-            }, link: function (scope) {
-                scope.inCart = $filter('cartExist')(scope.product);
-                scope.addToCart = function () {
-                    cart.addCart(scope.product);
-                    scope.inCart = true;
+            }, controller: function ($scope) {
+
+
+
+                $scope.addToCart = function () {
+                    if(cart.addCart($scope.product))
+                        alert("added to cart!");
+                        else
+                        alert("already in cart!")
+
+
                 };
             },
             templateUrl: "./template/singleProduct.html"
@@ -239,19 +244,19 @@ module.exports = function (deskApp) {
 module.exports = function (deskApp) {
     deskApp.factory('cart', ['listProducts', '$filter', function (listProducts, $filter) {
         var cart = [];
-        var cartElements = [];
         return {
-            getCart: function () {
-                return cart;
-            },
             getCartElements: function () {
-                return cartElements;
+                return cart;
             },
             addCart: function (elem) {
                 if (!$filter('cartExist')(elem)) {
-                    cart.push(elem.productID);
-                    cartElements.push(elem);
+                    cart.push(elem);
+                    return true;
                 }
+                return false;
+            },
+            deleteElement: function (elem) {
+                cart.remove(elem);
             }
 
         };
@@ -339,6 +344,9 @@ module.exports = function (deskApp) {
                     if (list[i].productID === id)
                         return angular.copy(list[i]);
             },
+            getItemsByTitle: function (titles) {
+                
+            },
             getItems: function (ids) {
                 var arr = [];
                 ids.sort();
@@ -361,16 +369,17 @@ module.exports = function (deskApp) {
     deskApp.filter('cartExist', ['cart', function (cart) {
         return function (element) {
             var i = 0;
-            var c = cart.getCart();
+            var c = cart.getCartElements();
             for (i; i < c.length; i++) {
-                if (c[i] === element.productID)
+                if (c[i].productID === element.productID)
                     return true;
             }
             return false;
         }
     }]);
 };
-        /***/ }),
+
+/***/ }),
 /* 11 */
 /***/ (function(module, exports) {
 
@@ -1594,6 +1603,50 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+Array.prototype.remove = function(value) {
+    var idx = this.indexOf(value);
+    if (idx != -1) {
+        // Второй параметр - число элементов, которые необходимо удалить
+        return this.splice(idx, 1);
+    }
+    return false;
+}
+var angular = __webpack_require__(14);
+__webpack_require__(2);
+var deskApp = angular.module("deskApp", ['ngRoute']);
+
+deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
+    // $locationProvider.html5Mode({
+    //     enabled:true,
+    //     requireBase:false
+    // });
+    $routeProvider.when('/', {
+        templateUrl: "template/home.html",
+        controller: 'listPageCtrl'
+    }).when('/product/:productId',{
+        templateUrl: 'template/singleProductAbout.html',
+        controller: 'detailProductCtrl'
+    })
+
+        .otherwise({
+            template: "<h1>404</h1>"
+        })
+}]);
+__webpack_require__(1)(deskApp);
+
+/***/ }),
+/* 13 */,
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(15);
+module.exports = angular;
+
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports) {
 
 /**
@@ -34580,31 +34633,21 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 16 */
+/***/ (function(module, exports) {
 
-var angular = __webpack_require__(2);
-__webpack_require__(1);
-var deskApp = angular.module("deskApp", ['ngRoute']);
+module.exports = function (ngModule) {
+  ngModule.directive("search",['listProducts',function (listProducts) {
+      return{
+          templateUrl: './template/search.html',
+          replace:true,
+          controller:function ($scope) {
+           $scope.list = listProducts.getList();
+          }
+      }
+  }]);
 
-deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
-    // $locationProvider.html5Mode({
-    //     enabled:true,
-    //     requireBase:false
-    // });
-    $routeProvider.when('/', {
-        templateUrl: "template/home.html",
-        controller: 'listPageCtrl'
-    }).when('/product/:productId',{
-        templateUrl: 'template/singleProductAbout.html',
-        controller: 'detailProductCtrl'
-    })
-
-        .otherwise({
-            template: "<h1>404</h1>"
-        })
-}]);
-__webpack_require__(0)(deskApp);
+};
 
 /***/ })
 /******/ ]);

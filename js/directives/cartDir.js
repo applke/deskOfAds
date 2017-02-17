@@ -6,10 +6,14 @@ module.exports = function (ngModule) {
             }, controller: function ($scope) {
 
                 $scope.c = cart.getCartElements();
+                $scope.deleteFromCart = function (value) {
+                       cart.deleteElement(value);
 
-                console.log("cart", $scope.c);
+                };
+
 
             },
+            replace:true,
             templateUrl: "./template/cart.html"
         };
     }]);
