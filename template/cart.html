@@ -1,5 +1,5 @@
 <ul class="dropdown-menu">
-    <li  ng-show='c.length===0'><a href="#">Cart Is Empty!</a></li>
+    <li  ng-show='c.length===0'><a href="#">Cart Is Empty :(!</a></li>
     <li ng-repeat="item in c">
     <a> <i>{{item.productTitle}}</i> <span> - </span> <b>{{item.productPrice|currency}}</b>
         <button type="button" ng-click="deleteFromCart(item)" class="btn btn-default btn-sm">
