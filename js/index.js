@@ -7,9 +7,11 @@ module.exports = function (ngModule) {
 
   require('./directives/prevImgDir.js')(ngModule);
   require('./directives/productListDir.js')(ngModule);
+  require('./directives/cartDir.js')(ngModule);
 
   require('./factories/cart.js')(ngModule);
   require('./factories/listProducts.js')(ngModule);
 
   require('./filters/productFilters.js')(ngModule);
+
 };

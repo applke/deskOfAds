@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -77,20 +77,22 @@ module.exports = function (ngModule) {
   __webpack_require__(3)(ngModule);
   __webpack_require__(4)(ngModule);
 
-  __webpack_require__(5)(ngModule);
   __webpack_require__(6)(ngModule);
-
   __webpack_require__(7)(ngModule);
-  __webpack_require__(8)(ngModule);
+  __webpack_require__(5)(ngModule);
 
+  __webpack_require__(8)(ngModule);
   __webpack_require__(9)(ngModule);
+
+  __webpack_require__(10)(ngModule);
+
 };
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(10);
+__webpack_require__(11);
 module.exports = 'ngRoute';
 
 
@@ -98,7 +100,7 @@ module.exports = 'ngRoute';
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(11);
+__webpack_require__(12);
 module.exports = angular;
 
 
@@ -120,9 +122,8 @@ module.exports = function (deskApp) {
         }
 
     }]);
-};;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-/***/ }),
+};
+        /***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
@@ -153,6 +154,27 @@ module.exports = function(deskApp){
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+module.exports = function (ngModule) {
+
+    ngModule.directive("cart", ['cart', function (cart) {
+        return {
+            link: function (scope) {
+            }, controller: function ($scope) {
+
+                $scope.c = cart.getCartElements();
+
+                console.log("cart", $scope.c);
+
+            },
+            templateUrl: "./template/cart.html"
+        };
+    }]);
+};
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports) {
 
 module.exports = function (deskApp) {
@@ -189,7 +211,7 @@ deskApp.directive("prevImg",function ($interval) {
 };
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = function (deskApp) {
@@ -211,20 +233,25 @@ module.exports = function (deskApp) {
 };
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = function (deskApp) {
-    deskApp.factory('cart', ['$filter', function ($filter) {
+    deskApp.factory('cart', ['listProducts', '$filter', function (listProducts, $filter) {
         var cart = [];
+        var cartElements = [];
         return {
             getCart: function () {
                 return cart;
             },
+            getCartElements: function () {
+                return cartElements;
+            },
             addCart: function (elem) {
-                if (!$filter('cartExist')(elem))
+                if (!$filter('cartExist')(elem)) {
                     cart.push(elem.productID);
-                console.log(cart);
+                    cartElements.push(elem);
+                }
             }
 
         };
@@ -232,97 +259,102 @@ module.exports = function (deskApp) {
 };
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = function (deskApp) {
-deskApp.factory("listProducts", [function () {
-    var list = [
-        {
-            productID: 0,
-            productTitle: "Apple Iphone 5S",
-            productPrice: "500",
-            productAbout: "This is brand new phone from the Apple!",
-            productImages: [
-                'product_images/AppleIphone/30018901b.jpg',
-                'product_images/AppleIphone/918201370949PM_635_iPhone-5s.jpeg',
-                'product_images/AppleIphone/apple_iphone_5s_space_grey_450.jpg',
-                'product_images/AppleIphone/iphone5s-gallery-img-1.jpg'
-            ],
-            productField1: "Field1",
-            productField2: "Field2",
-            productField3: "Field3",
-            productField4: "Field4",
-            productField5: "Field5",
-        },
-        {
-            productID: 1,
-            productTitle: "SSD",
-            productPrice: "250",
-            productAbout: "This is brand new ssd from the Intel!",
-            productImages: [
-                'product_images/SSD/09fd8a0aac7112501b566d552d4768bb.jpg',
-                'product_images/SSD/ssd (1).jpg',
-                'product_images/SSD/SSD.jpg'
-            ],
-            productField1: "Field1",
-            productField2: "Field2",
-            productField3: "Field3",
-            productField4: "Field4",
-            productField5: "Field5",
-        },
-        {
-            productID: 2,
-            productTitle: "MacBook Pro Retina 13 SSD+",
-            productPrice: "1250",
-            productAbout: "This is brand new MacBook by Apple!",
-            productImages: [
-                'product_images/macbook/mac1.jpg',
-                'product_images/macbook/mac2.jpg',
-            ],
-            productField1: "Field1",
-            productField2: "Field2",
-            productField3: "Field3",
-            productField4: "Field4",
-            productField5: "Field5",
-        },
-        {
-            productID: 3,
-            productTitle: "SSD",
-            productPrice: "250",
-            productAbout: "This is brand new ssd from Intel!",
-            productImages: [
-                'product_images/SSD/09fd8a0aac7112501b566d552d4768bb.jpg',
-                'product_images/SSD/ssd (1).jpg',
-                'product_images/SSD/SSD.jpg'
-            ],
-            productField1: "Field1",
-            productField2: "Field2",
-            productField3: "Field3",
-            productField4: "Field4",
-            productField5: "Field5",
-        }];
-    return {
-        getList: function () {
-            return list;
-        },
-        getItem: function (id) {
-            id = parseInt(id);
+    deskApp.factory("listProducts", [function () {
+        var list = [
+            {
+                productID: 0,
+                productTitle: "Apple Iphone 5S",
+                productPrice: "500",
+                productAbout: "This is brand new phone from the Apple!",
+                productImages: [
+                    'product_images/AppleIphone/30018901b.jpg',
+                    'product_images/AppleIphone/918201370949PM_635_iPhone-5s.jpeg',
+                    'product_images/AppleIphone/apple_iphone_5s_space_grey_450.jpg',
+                    'product_images/AppleIphone/iphone5s-gallery-img-1.jpg'
+                ],
+                productField1: "Field1",
+                productField2: "Field2",
+                productField3: "Field3",
+                productField4: "Field4",
+                productField5: "Field5",
+            },
+            {
+                productID: 1,
+                productTitle: "SSD",
+                productPrice: "250",
+                productAbout: "This is brand new ssd from the Intel!",
+                productImages: [
+                    'product_images/SSD/09fd8a0aac7112501b566d552d4768bb.jpg',
+                    'product_images/SSD/ssd (1).jpg',
+                    'product_images/SSD/SSD.jpg'
+                ],
+                productField1: "Field1",
+                productField2: "Field2",
+                productField3: "Field3",
+                productField4: "Field4",
+                productField5: "Field5",
+            },
+            {
+                productID: 2,
+                productTitle: "MacBook Pro Retina 13 SSD+",
+                productPrice: "1250",
+                productAbout: "This is brand new MacBook by Apple!",
+                productImages: [
+                    'product_images/macbook/mac1.jpg',
+                    'product_images/macbook/mac2.jpg',
+                ],
+                productField1: "Field1",
+                productField2: "Field2",
+                productField3: "Field3",
+                productField4: "Field4",
+                productField5: "Field5",
+            },
+            {
+                productID: 3,
+                productTitle: "SSD",
+                productPrice: "250",
+                productAbout: "This is brand new ssd from Intel!",
+                productImages: [
+                    'product_images/SSD/09fd8a0aac7112501b566d552d4768bb.jpg',
+                    'product_images/SSD/ssd (1).jpg',
+                    'product_images/SSD/SSD.jpg'
+                ],
+                productField1: "Field1",
+                productField2: "Field2",
+                productField3: "Field3",
+                productField4: "Field4",
+                productField5: "Field5",
+            }];
+        return {
+            getList: function () {
+                return list;
+            },
+            getItem: function (id) {
+                id = parseInt(id);
+                for (var i = 0; i < list.length; i++)
+                    if (list[i].productID === id)
+                        return angular.copy(list[i]);
+            },
+            getItems: function (ids) {
+                var arr = [];
+                ids.sort();
+                var j =0;
+                for (var i = 0; i < list.length; i++)
+                    if (list[i].productID === ids[j] && j<=ids.length )
+                        arr.push(list[i]);
+                return arr;
+            }
+        };
 
-            for (var i = 0; i < list.length; i++)
-                if (list[i].productID === id)
-                    return angular.copy(list[i]);
-
-
-            //  return 0;
-        }
-    };
-
-}]);
+    }]);
 };
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = function (deskApp) {
@@ -337,10 +369,9 @@ module.exports = function (deskApp) {
             return false;
         }
     }]);
-};;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-/***/ }),
-/* 10 */
+};
+        /***/ }),
+/* 11 */
 /***/ (function(module, exports) {
 
 /**
@@ -1562,7 +1593,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 /**
@@ -34549,7 +34580,7 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var angular = __webpack_require__(2);

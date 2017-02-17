@@ -1,0 +1,5 @@
+<h1 ng-bind='c.length===0 ? "Cart is Empy":"Cart"'></h1>
+<ul><li ng-repeat="item in c">
+    <i>{{item.productTitle}}</i> <span> - </span> <b>{{item.productPrice}}</b>
+</li>
+</ul>
