@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -76,17 +76,19 @@
 module.exports = function (ngModule) {
   __webpack_require__(3)(ngModule);
   __webpack_require__(4)(ngModule);
+  __webpack_require__(17)(ngModule);
+  __webpack_require__(18)(ngModule);
 
-  __webpack_require__(6)(ngModule);
   __webpack_require__(7)(ngModule);
-  __webpack_require__(5)(ngModule);
   __webpack_require__(8)(ngModule);
-  __webpack_require__(15)(ngModule);
-
+  __webpack_require__(5)(ngModule);
   __webpack_require__(9)(ngModule);
-  __webpack_require__(10)(ngModule);
+  __webpack_require__(6)(ngModule);
 
+  __webpack_require__(10)(ngModule);
   __webpack_require__(11)(ngModule);
+
+  __webpack_require__(12)(ngModule);
 
 };
 
@@ -94,7 +96,7 @@ module.exports = function (ngModule) {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(12);
+__webpack_require__(13);
 module.exports = 'ngRoute';
 
 
@@ -102,7 +104,7 @@ module.exports = 'ngRoute';
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(13);
+__webpack_require__(14);
 module.exports = angular;
 
 
@@ -114,12 +116,15 @@ module.exports = angular;
  * Created by asus on 17.02.2017.
  */
 module.exports = function (deskApp) {
-    deskApp.controller("detailProductCtrl", ['$scope', '$routeParams', 'listProducts', 'cart', '$filter', function ($scope, $routeParams, listProducts, cart, $filter) {
+    deskApp.controller("detailProductCtrl", ['$scope','Notification','$routeParams', 'listProducts', 'cart', '$filter', function ($scope,Notification, $routeParams, listProducts, cart, $filter) {
         var productID = $routeParams.productId;
         $scope.product = listProducts.getItem(productID);
         $scope.inCart = $filter('cartExist')($scope.product);
         $scope.addToCart = function () {
-            cart.addCart($scope.product);
+            if(cart.addCart($scope.product))
+                Notification.success({message: $scope.product.productTitle+' has been added to cart!', positionY: 'bottom', positionX: 'right'});
+            else
+                Notification.info({message: $scope.product.productTitle+'already in cart!', positionY: 'bottom', positionX: 'right'});
             $scope.inCart = true;
         }
 
@@ -184,6 +189,54 @@ module.exports = function (ngModule) {
 /* 6 */
 /***/ (function(module, exports) {
 
+module.exports = function (ngModule) {
+    ngModule.directive("navbar", ['$routeParams', '$location', function ($routeParams, $location) {
+        return {
+            replace: true,
+            templateUrl: 'template/navbar.html',
+            controller: function ($scope) {
+                $scope.active = -1;
+                $scope.dev = "#!";
+                $scope.$on('$routeChangeSuccess', function () {
+
+                        var loc = $location.path();
+                        for (var i = 0; i < $scope.listMenu.length; i++) {
+                            if (loc === $scope.listMenu[i].url) {
+
+                                return $scope.active = i;
+
+                            }
+                        }
+                        $scope.active = -1;
+
+                    }
+                );
+
+                $scope.isActive = function (id) {
+                    if (id === $scope.active)
+                        return 'active';
+                    else return '';
+                }
+                $scope.listMenu = [
+                    {
+                        name: "About Us",
+                        url: "/about"
+                    },
+                    {
+                        name: "Social Network",
+                        url: "/social"
+                    }
+                ]
+            }
+        };
+    }]);
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
 module.exports = function (deskApp) {
 deskApp.directive("prevImg",function ($interval) {
 
@@ -218,11 +271,11 @@ deskApp.directive("prevImg",function ($interval) {
 };
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = function (deskApp) {
-    deskApp.directive('productList', ['cart', '$filter', function (cart, $filter) {
+    deskApp.directive('productList', ['cart', '$filter','Notification', function (cart, $filter,Notification) {
         return {
             scope: {
                 product: '='
@@ -232,9 +285,9 @@ module.exports = function (deskApp) {
 
                 $scope.addToCart = function () {
                     if(cart.addCart($scope.product))
-                        alert("added to cart!");
+                        Notification.success({message: $scope.product.productTitle+' has been added to cart!', positionY: 'bottom', positionX: 'right'});
                         else
-                        alert("already in cart!")
+                        Notification.info({message: $scope.product.productTitle+'already in cart!', positionY: 'bottom', positionX: 'right'});
 
 
                 };
@@ -246,7 +299,7 @@ module.exports = function (deskApp) {
 };
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = function (ngModule) {
@@ -263,7 +316,7 @@ module.exports = function (ngModule) {
 };
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = function (deskApp) {
@@ -289,7 +342,7 @@ module.exports = function (deskApp) {
 };
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = function (deskApp) {
@@ -387,7 +440,7 @@ module.exports = function (deskApp) {
 };
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = function (deskApp) {
@@ -405,7 +458,7 @@ module.exports = function (deskApp) {
 };
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 /**
@@ -1627,7 +1680,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 /**
@@ -34614,7 +34667,7 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Array.prototype.remove = function(value) {
@@ -34627,7 +34680,8 @@ Array.prototype.remove = function(value) {
 }
 var angular = __webpack_require__(2);
 __webpack_require__(1);
-var deskApp = angular.module("deskApp", ['ngRoute']);
+__webpack_require__(16);
+var deskApp = angular.module("deskApp", ['ngRoute','ui-notification']);
 
 deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
     // $locationProvider.html5Mode({
@@ -34644,6 +34698,12 @@ deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$l
         templateUrl: "template/aboutus.html"
     }).when('/social',{
         templateUrl:"template/social.html"
+    }).when('/login',{
+        templateUrl:"template/login.html",
+        controller: 'loginCtrl'
+    }).when('/register',{
+        templateUrl:"template/register.html",
+        controller:'registerCtrl'
     }).
     otherwise({
             template: "<h1>404</h1>"
@@ -34652,52 +34712,271 @@ deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$l
 __webpack_require__(0)(deskApp);
 
 /***/ }),
-/* 15 */
+/* 16 */
+/***/ (function(module, exports) {
+
+/**
+ * angular-ui-notification - Angular.js service providing simple notifications using Bootstrap 3 styles with css transitions for animating
+ * @author Alex_Crack
+ * @version v0.3.5
+ * @link https://github.com/alexcrack/angular-ui-notification
+ * @license MIT
+ */
+angular.module('ui-notification',[]);
+
+angular.module('ui-notification').provider('Notification', function() {
+
+    this.options = {
+        delay: 5000,
+        startTop: 10,
+        startRight: 10,
+        verticalSpacing: 10,
+        horizontalSpacing: 10,
+        positionX: 'right',
+        positionY: 'top',
+        replaceMessage: false,
+        templateUrl: 'angular-ui-notification.html',
+        onClose: undefined,
+        closeOnClick: true,
+        maxCount: 0, // 0 - Infinite
+        container: 'body'
+    };
+
+    this.setOptions = function(options) {
+        if (!angular.isObject(options)) throw new Error("Options should be an object!");
+        this.options = angular.extend({}, this.options, options);
+    };
+
+    this.$get = ["$timeout", "$http", "$compile", "$templateCache", "$rootScope", "$injector", "$sce", "$q", "$window", function($timeout, $http, $compile, $templateCache, $rootScope, $injector, $sce, $q, $window) {
+        var options = this.options;
+
+        var startTop = options.startTop;
+        var startRight = options.startRight;
+        var verticalSpacing = options.verticalSpacing;
+        var horizontalSpacing = options.horizontalSpacing;
+        var delay = options.delay;
+
+        var messageElements = [];
+        var isResizeBound = false;
+
+        var notify = function(args, t){
+            var deferred = $q.defer();
+
+            if (typeof args !== 'object' || args === null) {
+                args = {message:args};
+            }
+
+            args.scope = args.scope ? args.scope : $rootScope;
+            args.template = args.templateUrl ? args.templateUrl : options.templateUrl;
+            args.delay = !angular.isUndefined(args.delay) ? args.delay : delay;
+            args.type = t || args.type || options.type ||  '';
+            args.positionY = args.positionY ? args.positionY : options.positionY;
+            args.positionX = args.positionX ? args.positionX : options.positionX;
+            args.replaceMessage = args.replaceMessage ? args.replaceMessage : options.replaceMessage;
+            args.onClose = args.onClose ? args.onClose : options.onClose;
+            args.closeOnClick = (args.closeOnClick !== null && args.closeOnClick !== undefined) ? args.closeOnClick : options.closeOnClick;
+            args.container = args.container ? args.container : options.container;
+            
+            var template=$templateCache.get(args.template);
+
+            if(template){
+                processNotificationTemplate(template);
+            }else{
+                // load it via $http only if it isn't default template and template isn't exist in template cache
+                // cache:true means cache it for later access.
+                $http.get(args.template,{cache: true})
+                  .then(processNotificationTemplate)
+                  .catch(function(data){
+                    throw new Error('Template ('+args.template+') could not be loaded. ' + data);
+                  });                
+            }    
+            
+            
+             function processNotificationTemplate(template) {
+
+                var scope = args.scope.$new();
+                scope.message = $sce.trustAsHtml(args.message);
+                scope.title = $sce.trustAsHtml(args.title);
+                scope.t = args.type.substr(0,1);
+                scope.delay = args.delay;
+                scope.onClose = args.onClose;
+
+                var reposite = function() {
+                    var j = 0;
+                    var k = 0;
+                    var lastTop = startTop;
+                    var lastRight = startRight;
+                    var lastPosition = [];
+                    for(var i = messageElements.length - 1; i >= 0; i --) {
+                        var element  = messageElements[i];
+                        if (args.replaceMessage && i < messageElements.length - 1) {
+                            element.addClass('killed');
+                            continue;
+                        }
+                        var elHeight = parseInt(element[0].offsetHeight);
+                        var elWidth  = parseInt(element[0].offsetWidth);
+                        var position = lastPosition[element._positionY+element._positionX];
+
+                        if ((top + elHeight) > window.innerHeight) {
+                            position = startTop;
+                            k ++;
+                            j = 0;
+                        }
+
+                        var top = (lastTop = position ? (j === 0 ? position : position + verticalSpacing) : startTop);
+                        var right = lastRight + (k * (horizontalSpacing + elWidth));
+
+                        element.css(element._positionY, top + 'px');
+                        if (element._positionX == 'center') {
+                            element.css('left', parseInt(window.innerWidth / 2 - elWidth / 2) + 'px');
+                        } else {
+                            element.css(element._positionX, right + 'px');
+                        }
+
+                        lastPosition[element._positionY+element._positionX] = top + elHeight;
+
+                        if (options.maxCount > 0 && messageElements.length > options.maxCount && i === 0) {
+                            element.scope().kill(true);
+                        }
+
+                        j ++;
+                    }
+                };
+
+                var templateElement = $compile(template)(scope);
+                templateElement._positionY = args.positionY;
+                templateElement._positionX = args.positionX;
+                templateElement.addClass(args.type);
+
+                var closeEvent = function(e) {
+                    e = e.originalEvent || e;
+                    if (e.type === 'click' || (e.propertyName === 'opacity' && e.elapsedTime >= 1)){
+                        if (scope.onClose) {
+                            scope.$apply(scope.onClose(templateElement));
+                        }
+
+                        templateElement.remove();
+                        messageElements.splice(messageElements.indexOf(templateElement), 1);
+                        scope.$destroy();
+                        reposite();
+                    }
+                };
+
+                if (args.closeOnClick) {
+                    templateElement.addClass('clickable');
+                    templateElement.bind('click', closeEvent);
+                }
+
+                templateElement.bind('webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd', closeEvent);
+
+                if (angular.isNumber(args.delay)) {
+                    $timeout(function() {
+                        templateElement.addClass('killed');
+                    }, args.delay);
+                }
+
+                setCssTransitions('none');
+
+                angular.element(document.querySelector(args.container)).append(templateElement);
+                var offset = -(parseInt(templateElement[0].offsetHeight) + 50);
+                templateElement.css(templateElement._positionY, offset + "px");
+                messageElements.push(templateElement);
+
+                if(args.positionX == 'center'){
+                    var elWidth = parseInt(templateElement[0].offsetWidth);
+                    templateElement.css('left', parseInt(window.innerWidth / 2 - elWidth / 2) + 'px');
+                }
+
+                $timeout(function(){
+                    setCssTransitions('');
+                });
+
+                function setCssTransitions(value){
+                    ['-webkit-transition', '-o-transition', 'transition'].forEach(function(prefix){
+                        templateElement.css(prefix, value);
+                    });
+                }
+
+                scope._templateElement = templateElement;
+
+                scope.kill = function(isHard) {
+                    if (isHard) {
+                        if (scope.onClose) {
+                            scope.$apply(scope.onClose(scope._templateElement));
+                        }
+
+                        messageElements.splice(messageElements.indexOf(scope._templateElement), 1);
+                        scope._templateElement.remove();
+                        scope.$destroy();
+                        $timeout(reposite);
+                    } else {
+                        scope._templateElement.addClass('killed');
+                    }
+                };
+
+                $timeout(reposite);
+
+                if (!isResizeBound) {
+                    angular.element($window).bind('resize', function(e) {
+                        $timeout(reposite);
+                    });
+                    isResizeBound = true;
+                }
+
+                deferred.resolve(scope);
+
+            }
+
+            return deferred.promise;
+        };
+
+        notify.primary = function(args) {
+            return this(args, 'primary');
+        };
+        notify.error = function(args) {
+            return this(args, 'error');
+        };
+        notify.success = function(args) {
+            return this(args, 'success');
+        };
+        notify.info = function(args) {
+            return this(args, 'info');
+        };
+        notify.warning = function(args) {
+            return this(args, 'warning');
+        };
+
+        notify.clearAll = function() {
+            angular.forEach(messageElements, function(element) {
+                element.addClass('killed');
+            });
+        };
+
+        return notify;
+    }];
+});
+
+angular.module("ui-notification").run(["$templateCache", function($templateCache) {$templateCache.put("angular-ui-notification.html","<div class=\"ui-notification\"><h3 ng-show=\"title\" ng-bind-html=\"title\"></h3><div class=\"message\" ng-bind-html=\"message\"></div></div>");}]);
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = function (ngModule) {
-    ngModule.directive("navbar", ['$routeParams', '$location', function ($routeParams, $location) {
-        return {
-            replace: true,
-            template: '  <ul class="nav navbar-nav"><li ng-repeat="e in listMenu" ng-class="isActive($index)"><a href="{{dev+e.url}}" ng-bind="e.name"></a></li></ul>',
-            controller: function ($scope) {
-                $scope.active = -1;
-                $scope.dev = "#!";
-                $scope.$on('$routeChangeSuccess', function () {
-
-                        var loc = $location.path();
-                        for (var i = 0; i < $scope.listMenu.length; i++) {
-                            if (loc === $scope.listMenu[i].url) {
-
-                                return $scope.active = i;
-
-                            }
-                        }
-                        $scope.active = -1;
-
-                    }
-                );
-
-                $scope.isActive = function (id) {
-                    if (id === $scope.active)
-                        return 'active';
-                    else return '';
-                }
-                $scope.listMenu = [
-                    {
-                        name: "About Us",
-                        url: "/about"
-                    },
-                    {
-                        name: "Social Network",
-                        url: "/social"
-                    }
-                ]
-            }
-        };
-    }]);
+  ngModule.controller("loginCtrl",['$scope',function ($scope) {
+      
+  }]);  
 };
 
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+module.exports = function (ngModule) {
+    ngModule.controller("registerCtrl",["$scope",function ($scope) {
+        
+    }])
+};
 
 /***/ })
 /******/ ]);

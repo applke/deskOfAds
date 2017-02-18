@@ -2,7 +2,7 @@ module.exports = function (ngModule) {
     ngModule.directive("navbar", ['$routeParams', '$location', function ($routeParams, $location) {
         return {
             replace: true,
-            template: '  <ul class="nav navbar-nav"><li ng-repeat="e in listMenu" ng-class="isActive($index)"><a href="{{dev+e.url}}" ng-bind="e.name"></a></li></ul>',
+            templateUrl: 'template/navbar.html',
             controller: function ($scope) {
                 $scope.active = -1;
                 $scope.dev = "#!";

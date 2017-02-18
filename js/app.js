@@ -8,7 +8,8 @@ Array.prototype.remove = function(value) {
 }
 var angular = require('angular');
 require('angular-route');
-var deskApp = angular.module("deskApp", ['ngRoute']);
+require('../bower_components/angular-ui-notification/dist/angular-ui-notification.js');
+var deskApp = angular.module("deskApp", ['ngRoute','ui-notification']);
 
 deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
     // $locationProvider.html5Mode({
@@ -25,6 +26,12 @@ deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$l
         templateUrl: "template/aboutus.html"
     }).when('/social',{
         templateUrl:"template/social.html"
+    }).when('/login',{
+        templateUrl:"template/login.html",
+        controller: 'loginCtrl'
+    }).when('/register',{
+        templateUrl:"template/register.html",
+        controller:'registerCtrl'
     }).
     otherwise({
             template: "<h1>404</h1>"

@@ -4,6 +4,8 @@
 module.exports = function (ngModule) {
   require('./controllers/detailProductCtrl.js')(ngModule);
   require('./controllers/listPageCtrl.js')(ngModule);
+  require('./controllers/loginCtrl')(ngModule);
+  require('./controllers/registerCtrl')(ngModule);
 
   require('./directives/prevImgDir.js')(ngModule);
   require('./directives/productListDir.js')(ngModule);

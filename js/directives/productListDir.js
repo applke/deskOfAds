@@ -1,5 +1,5 @@
 module.exports = function (deskApp) {
-    deskApp.directive('productList', ['cart', '$filter', function (cart, $filter) {
+    deskApp.directive('productList', ['cart', '$filter','Notification', function (cart, $filter,Notification) {
         return {
             scope: {
                 product: '='
@@ -9,9 +9,9 @@ module.exports = function (deskApp) {
 
                 $scope.addToCart = function () {
                     if(cart.addCart($scope.product))
-                        alert("added to cart!");
+                        Notification.success({message: $scope.product.productTitle+' has been added to cart!', positionY: 'bottom', positionX: 'right'});
                         else
-                        alert("already in cart!")
+                        Notification.info({message: $scope.product.productTitle+'already in cart!', positionY: 'bottom', positionX: 'right'});
 
 
                 };
