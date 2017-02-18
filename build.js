@@ -63,12 +63,11 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */,
-/* 1 */
+/* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -81,21 +80,30 @@ module.exports = function (ngModule) {
   __webpack_require__(6)(ngModule);
   __webpack_require__(7)(ngModule);
   __webpack_require__(5)(ngModule);
-  __webpack_require__(16)(ngModule);
-
   __webpack_require__(8)(ngModule);
-  __webpack_require__(9)(ngModule);
+  __webpack_require__(15)(ngModule);
 
+  __webpack_require__(9)(ngModule);
   __webpack_require__(10)(ngModule);
 
+  __webpack_require__(11)(ngModule);
+
 };
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(12);
+module.exports = 'ngRoute';
+
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(11);
-module.exports = 'ngRoute';
+__webpack_require__(13);
+module.exports = angular;
 
 
 /***/ }),
@@ -116,7 +124,7 @@ module.exports = function (deskApp) {
         }
 
     }]);
-};;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+};
 
 /***/ }),
 /* 4 */
@@ -241,6 +249,23 @@ module.exports = function (deskApp) {
 /* 8 */
 /***/ (function(module, exports) {
 
+module.exports = function (ngModule) {
+  ngModule.directive("search",['listProducts',function (listProducts) {
+      return{
+          templateUrl: './template/search.html',
+          replace:true,
+          controller:function ($scope) {
+           $scope.list = listProducts.getList();
+          }
+      }
+  }]);
+
+};
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
 module.exports = function (deskApp) {
     deskApp.factory('cart', ['listProducts', '$filter', function (listProducts, $filter) {
         var cart = [];
@@ -264,7 +289,7 @@ module.exports = function (deskApp) {
 };
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = function (deskApp) {
@@ -362,7 +387,7 @@ module.exports = function (deskApp) {
 };
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = function (deskApp) {
@@ -380,7 +405,7 @@ module.exports = function (deskApp) {
 };
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 /**
@@ -1602,51 +1627,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 
 /***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-Array.prototype.remove = function(value) {
-    var idx = this.indexOf(value);
-    if (idx != -1) {
-        // Второй параметр - число элементов, которые необходимо удалить
-        return this.splice(idx, 1);
-    }
-    return false;
-}
-var angular = __webpack_require__(14);
-__webpack_require__(2);
-var deskApp = angular.module("deskApp", ['ngRoute']);
-
-deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
-    // $locationProvider.html5Mode({
-    //     enabled:true,
-    //     requireBase:false
-    // });
-    $routeProvider.when('/', {
-        templateUrl: "template/home.html",
-        controller: 'listPageCtrl'
-    }).when('/product/:productId',{
-        templateUrl: 'template/singleProductAbout.html',
-        controller: 'detailProductCtrl'
-    })
-
-        .otherwise({
-            template: "<h1>404</h1>"
-        })
-}]);
-__webpack_require__(1)(deskApp);
-
-/***/ }),
-/* 13 */,
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(15);
-module.exports = angular;
-
-
-/***/ }),
-/* 15 */
+/* 13 */
 /***/ (function(module, exports) {
 
 /**
@@ -34633,21 +34614,90 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 16 */
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+Array.prototype.remove = function(value) {
+    var idx = this.indexOf(value);
+    if (idx != -1) {
+        // Второй параметр - число элементов, которые необходимо удалить
+        return this.splice(idx, 1);
+    }
+    return false;
+}
+var angular = __webpack_require__(2);
+__webpack_require__(1);
+var deskApp = angular.module("deskApp", ['ngRoute']);
+
+deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
+    // $locationProvider.html5Mode({
+    //     enabled:true,
+    //     requireBase:false
+    // });
+    $routeProvider.when('/', {
+        templateUrl: "template/home.html",
+        controller: 'listPageCtrl'
+    }).when('/product/:productId',{
+        templateUrl: 'template/singleProductAbout.html',
+        controller: 'detailProductCtrl'
+    }).when('/about',{
+        templateUrl: "template/aboutus.html"
+    }).when('/social',{
+        templateUrl:"template/social.html"
+    }).
+    otherwise({
+            template: "<h1>404</h1>"
+        })
+}]);
+__webpack_require__(0)(deskApp);
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = function (ngModule) {
-  ngModule.directive("search",['listProducts',function (listProducts) {
-      return{
-          templateUrl: './template/search.html',
-          replace:true,
-          controller:function ($scope) {
-           $scope.list = listProducts.getList();
-          }
-      }
-  }]);
+    ngModule.directive("navbar", ['$routeParams', '$location', function ($routeParams, $location) {
+        return {
+            replace: true,
+            template: '  <ul class="nav navbar-nav"><li ng-repeat="e in listMenu" ng-class="isActive($index)"><a href="{{dev+e.url}}" ng-bind="e.name"></a></li></ul>',
+            controller: function ($scope) {
+                $scope.active = -1;
+                $scope.dev = "#!";
+                $scope.$on('$routeChangeSuccess', function () {
 
+                        var loc = $location.path();
+                        for (var i = 0; i < $scope.listMenu.length; i++) {
+                            if (loc === $scope.listMenu[i].url) {
+
+                                return $scope.active = i;
+
+                            }
+                        }
+                        $scope.active = -1;
+
+                    }
+                );
+
+                $scope.isActive = function (id) {
+                    if (id === $scope.active)
+                        return 'active';
+                    else return '';
+                }
+                $scope.listMenu = [
+                    {
+                        name: "About Us",
+                        url: "/about"
+                    },
+                    {
+                        name: "Social Network",
+                        url: "/social"
+                    }
+                ]
+            }
+        };
+    }]);
 };
+
 
 /***/ })
 /******/ ]);

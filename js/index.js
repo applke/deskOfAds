@@ -9,6 +9,7 @@ module.exports = function (ngModule) {
   require('./directives/productListDir.js')(ngModule);
   require('./directives/cartDir.js')(ngModule);
   require('./directives/searchDir.js')(ngModule);
+  require('./directives/navbar.js')(ngModule);
 
   require('./factories/cart.js')(ngModule);
   require('./factories/listProducts.js')(ngModule);

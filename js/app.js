@@ -21,9 +21,12 @@ deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$l
     }).when('/product/:productId',{
         templateUrl: 'template/singleProductAbout.html',
         controller: 'detailProductCtrl'
-    })
-
-        .otherwise({
+    }).when('/about',{
+        templateUrl: "template/aboutus.html"
+    }).when('/social',{
+        templateUrl:"template/social.html"
+    }).
+    otherwise({
             template: "<h1>404</h1>"
         })
 }]);
