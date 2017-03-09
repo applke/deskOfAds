@@ -1,5 +1,13 @@
-<div class="products">
-    <button type="button" class="btn btn-info" ng-disabled="prevButtonEnable()" ng-click="prevProducts()">Prev products</button>
-    <div ng-repeat="product in list | limitTo:displayOnPage:displayProductsOffset" product-List product="product" ></div>
-    <button  type="button" class="btn btn-info" ng-disabled="nextButtonEnable()" ng-click="nextProducts()">Next Products</button>
-</div>
+<div>
+    <div ng-if="isMobile()">
+    <button class="btn btn-info" ng-click="makeGrid()"><i class="fa fa-th" aria-hidden="true"></i> GRID</button>
+    <button class="btn btn-info" ng-click="makeList()"><i class="fa fa-list" aria-hidden="true"></i>LIST</button>
+    </div>
+    <div class="products">
+
+        <div infinite-scroll="addMoreItems()" ng-class="getLayoutStyle()">
+            <div ng-repeat="product in list track by product.productID | limitTo:10:displayProductsOffset"
+                 product-List product="product"></div>
+        </div>
+
+    </div>

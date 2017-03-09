@@ -16,8 +16,8 @@
             <ul class="nav navbar-nav"><li ng-repeat="e in listMenu" ng-class="isActive($index)"><a href="{{dev+e.url}}" ng-bind="e.name"></a></li></ul>
             <search></search>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#!/login">Sign In</a></li>
-                <li><a href="#!/register">Register</a></li>
+                <li ng-repeat="e in accountMenu"><a href="{{dev+e.url}}">{{e.name}}</a></li>
+
                 <cart></cart>
 
             </ul>

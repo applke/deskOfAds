@@ -65,6 +65,9 @@ module.exports = function (deskApp) {
                 productField4: "Field4",
                 productField5: "Field5",
             }];
+        list.sort(function () {
+           return Math.random()*2-1;
+        });
         return {
             getList: function () {
                 return list;

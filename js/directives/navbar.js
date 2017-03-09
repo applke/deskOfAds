@@ -5,6 +5,7 @@ module.exports = function (ngModule) {
             templateUrl: 'template/navbar.html',
             controller: function ($scope) {
                 $scope.active = -1;
+
                 $scope.dev = "#!";
                 $scope.$on('$routeChangeSuccess', function () {
 
@@ -35,7 +36,17 @@ module.exports = function (ngModule) {
                         name: "Social Network",
                         url: "/social"
                     }
-                ]
+                ];
+                $scope.accountMenu=[
+                    {
+                        name:"Sign In",
+                        url:"/login"
+                    },
+                    {
+                        name:"Register",
+                        url:"/register"
+                    }
+                ];
             }
         };
     }]);

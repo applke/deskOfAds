@@ -17,5 +17,6 @@ module.exports = function (ngModule) {
   require('./factories/listProducts.js')(ngModule);
 
   require('./filters/productFilters.js')(ngModule);
+  require('../bower_components/ngInfiniteScroll/build/ng-infinite-scroll');
 
 };

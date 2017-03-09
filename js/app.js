@@ -9,7 +9,7 @@ Array.prototype.remove = function(value) {
 var angular = require('angular');
 require('angular-route');
 require('../bower_components/angular-ui-notification/dist/angular-ui-notification.js');
-var deskApp = angular.module("deskApp", ['ngRoute','ui-notification']);
+var deskApp = angular.module("deskApp", ['ngRoute','ui-notification','infinite-scroll']);
 
 deskApp.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
     // $locationProvider.html5Mode({
